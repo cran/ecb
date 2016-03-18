@@ -4,7 +4,7 @@ author: "Eric Persson"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{Programmatic access to ECB SDW}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -25,10 +25,12 @@ The following example extracts the last twelve observations of headline and
 See details below on how to use the `filter` parameter and how to find and use
 the SDW series keys.
 
-```{r hicp_plot}
+```{r}
 library(ecb)
 library(ggplot2)
+```
 
+```{r hicp_plot, eval=FALSE}
 key <- "ICP.M.DE+FR+ES+IT+NL+U2.N.000000+XEF000.4.ANR"
 filter <- list(lastNObservations = 12, detail = "full")
 
@@ -71,7 +73,7 @@ Available filter parameters:
     * Use `serieskeysonly` or `nodata` to list series that match a certain query, without returning the actual data
     * An alternative to using `serieskeys/nodata` is the convenience function `get_dimensions()`, which returns a list of dataframes with dimensions and explanations (see extended example below). 
     * `full` returns both the series values and all metadata. This entails retrieving much more data than with the `dataonly` option.
-* `includeHistory`
+* `includeHistory` (not currently implemented)
     * `false` (default) returns only version currently in production
     * `true` returns version currently in production, as well as all previous versions
 
@@ -145,7 +147,7 @@ strwrap(desc, width = 80)
 We now join together the two data sets:
 
 ```{r join_data}
-library(dplyr)
+suppressPackageStartupMessages(library(dplyr))
 
 unemp <- unemp %>% select(ref_area, obstime, "unemp" = obsvalue)
 wages <- wages %>% select(ref_area, obstime, "wage" = obsvalue)

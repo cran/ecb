@@ -65,7 +65,7 @@ get_dataflows <- function() {
 #'    \item An alternative to using \code{serieskeys/nodata} is the convenience function \code{get_dimensions()}, which returns a list of dataframes with dimensions and explanations (see extended example below).
 #'    \item \code{full} returns both the series values and all metadata. This entails retrieving much more data than with the `dataonly` option.
 #'    }
-#' \item \code{includeHistory}
+#' \item \code{includeHistory} (not currently implemented)
 #'  \itemize{
 #'    \item \code{false} (default) returns only version currently in production
 #'    \item \code{true} returns version currently in production, as well as all previous versions
@@ -95,7 +95,7 @@ get_data <- function(key, filter = NULL) {
   req <- make_request(query_url, "data")
 
   tmp <- tempfile()
-  writeLines(httr::content(req, "text"), tmp)
+  writeLines(httr::content(req, "text", encoding = "utf-8"), tmp)
 
   result <- rsdmx::readSDMX(tmp, FALSE)
 
@@ -127,7 +127,8 @@ get_dimensions <- function(key) {
 
   req <- make_request(query_url, "metadata")
 
-  skeys <- xml2::read_xml(httr::content(req, "text"), verbose = TRUE)
+  skeys <- xml2::read_xml(httr::content(req, "text", encoding = "utf-8"),
+                          verbose = TRUE)
 
   skeys_ns <- xml2::xml_ns(skeys) # xml namespace
 
