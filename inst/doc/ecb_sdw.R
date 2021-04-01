@@ -1,12 +1,12 @@
-## ----options, echo=FALSE-------------------------------------------------
+## ----options, echo=FALSE------------------------------------------------------
 knitr::opts_chunk$set(fig.path = "", fig.width = 6, fig.height = 5, 
                       cache = FALSE, warning = FALSE)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 library(ecb)
 library(ggplot2)
 
-## ----hicp_plot, eval=FALSE-----------------------------------------------
+## ----hicp_plot, eval=FALSE----------------------------------------------------
 #  key <- "ICP.M.DE+FR+ES+IT+NL+U2.N.000000+XEF000.4.ANR"
 #  filter <- list(lastNObservations = 12, detail = "full")
 #  
@@ -22,13 +22,13 @@ library(ggplot2)
 #    labs(x = NULL, y = "Percent per annum\n", color = NULL,
 #         title = "HICP - headline and core\n")
 
-## ----get_dimensions_example----------------------------------------------
+## ----get_dimensions_example---------------------------------------------------
 dims <- get_dimensions("ICP.M.DE.N.000000+XEF000.4.ANR")
 lapply(dims, head)
 
-## ----retrieve_data-------------------------------------------------------
+## ----retrieve_data------------------------------------------------------------
 
-unemp <- get_data("STS.A..N.UNEH.RTT000.4.AV3", 
+unemp <- get_data("LFSI.M..S.UNEHRT.TOTAL0.15_74.T", 
                  filter = list(startPeriod = "2000"))
 
 wages <- get_data("MNA.A.N..W2.S1.S1._Z.COM_HW._Z._T._Z.IX.V.N", 
@@ -37,20 +37,29 @@ wages <- get_data("MNA.A.N..W2.S1.S1._Z.COM_HW._Z._T._Z.IX.V.N",
 head(unemp)
 head(wages)
 
-## ----get_description_example---------------------------------------------
-desc <- head(get_description("STS.A..N.UNEH.RTT000.4.AV3"), 3)
+## ----get_description_example--------------------------------------------------
+desc <- head(get_description("LFSI.M..S.UNEHRT.TOTAL0.15_74.T"), 3)
 strwrap(desc, width = 80)
 
-## ----join_data-----------------------------------------------------------
+## ----join_data----------------------------------------------------------------
 suppressPackageStartupMessages(library(dplyr))
+suppressPackageStartupMessages(library(lubridate))
 
-unemp <- unemp %>% select(ref_area, obstime, "unemp" = obsvalue)
-wages <- wages %>% select(ref_area, obstime, "wage" = obsvalue)
+unemp <- unemp %>% 
+  mutate(obstime = convert_dates(obstime)) %>% 
+  group_by(ref_area, obstime = year(obstime)) %>% 
+  summarise(obsvalue = mean(obsvalue)) %>%
+  ungroup() %>% 
+  select(ref_area, obstime, "unemp" = obsvalue)
+
+wages <- wages %>% 
+  mutate(obstime = as.numeric(obstime)) %>% 
+  select(ref_area, obstime, "wage" = obsvalue)
 
 df <- left_join(unemp, wages)
 head(df)
 
-## ----phillips_plot, fig.width = 7, fig.height = 6------------------------
+## ----phillips_plot, fig.width = 7, fig.height = 6-----------------------------
 library(ggplot2)
 
 df %>% 

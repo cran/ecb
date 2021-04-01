@@ -1,16 +1,18 @@
 #' Retrieve data frame of all datasets in the ECB Statistical Data Warehouse
 #'
+#' @param ... Arguments passed to GET (e.g. timeout(10) to add maximum request time)
+#'
 #' @return A dataframe
 #' @export
 #'
 #' @examples
 #' df <- get_dataflows()
 #' head(df)
-get_dataflows <- function() {
+get_dataflows <- function(...) {
 
   query_url <- "https://sdw-wsrest.ecb.europa.eu/service/dataflow"
 
-  req <- make_request(query_url, "metadata")
+  req <- make_request(query_url, "metadata", ...)
 
   res <- xml2::read_xml(httr::content(req, "text"), verbose = TRUE)
 
@@ -31,6 +33,7 @@ get_dataflows <- function() {
 #'
 #' @param key A character string identifying the series to be retrieved
 #' @param filter A named list with additional filters (see \code{details})
+#' @param ... Arguments passed to GET (e.g. timeout(10) to add maximum request time)
 #'
 #' @details
 #' The \code{filter} option of \code{get_data()} takes a named list of key-value pairs.
@@ -80,7 +83,7 @@ get_dataflows <- function() {
 #' # Get monthly data on annualized euro area headline HICP
 #' hicp <- get_data("ICP.M.U2.N.000000.4.ANR")
 #' head(hicp)
-get_data <- function(key, filter = NULL) {
+get_data <- function(key, filter = NULL, ...) {
 
   if(!"detail" %in% names(filter)) {
     filter <- c(filter, "detail" = "dataonly")
@@ -92,7 +95,7 @@ get_data <- function(key, filter = NULL) {
 
   query_url <- create_query_url(key, filter = filter)
 
-  req <- make_request(query_url, "data")
+  req <- make_request(query_url, "data", ...)
 
   tmp <- tempfile()
   writeLines(httr::content(req, "text", encoding = "utf-8"), tmp)
@@ -111,6 +114,7 @@ get_data <- function(key, filter = NULL) {
 #' Retrieve dimensions of series in the ECB's SDW
 #'
 #' @param key A character string identifying the series to be retrieved
+#' @param ... Arguments passed to GET (e.g. timeout(10) to add maximum request time)
 #'
 #' @return A list of data frames, one for each series retrieved
 #' @export
@@ -118,14 +122,14 @@ get_data <- function(key, filter = NULL) {
 #' @examples
 #' hicp_dims <- get_dimensions("ICP.M.U2.N.000000.4.ANR")
 #' hicp_dims[[1]]
-get_dimensions <- function(key) {
+get_dimensions <- function(key, ...) {
 
   query_url <- create_query_url(key, filter = list("detail" = "nodata"))
 
   # Used in creating names (series_names) below
   flow_ref <- regmatches(key, regexpr("^[[:alnum:]]+", key))
 
-  req <- make_request(query_url, "metadata")
+  req <- make_request(query_url, "metadata", ...)
 
   skeys <- xml2::read_xml(httr::content(req, "text", encoding = "utf-8"),
                           verbose = TRUE)
@@ -184,17 +188,30 @@ get_description <- function(key) {
 #' str(hicp)
 convert_dates <- function(x) {
 
+  # Annual
   if(grepl("^[0-9]{4}$", x[1])) {
     return(as.Date(paste0(x, "-01-01"), "%Y-%m-%d"))
   }
 
+  # Monthly
   if(grepl("^[0-9]{4}-[0-9]{2}$", x[1])) {
     return(as.Date(paste0(x, "-01"), "%Y-%m-%d"))
   }
 
+  # Monthly
   if(grepl("^[0-9]{4}-[0-9]{2}-[0-9]{2}$", x[1])) {
     return(as.Date(x, "%Y-%m-%d"))
   }
+
+  # Quarterly
+  if(grepl("^[0-9]{4}-Q[1-4]{1}$", x[1])) {
+    stopifnot(requireNamespace("zoo", quietly = TRUE))
+    x <- sub("Q", "", x)
+    # frac = 1 for end-of-quarter dates
+    return(zoo::as.Date(zoo::as.yearqtr(x), frac = 1))
+  }
+  warning("Could not convert dates - format unknown.")
+  x
 }
 
 create_query_url <- function(key, filter = NULL) {
@@ -229,7 +246,7 @@ check_status <- function(req) {
     stop("HTTP failure: ", req$status_code, "\n", httr::content(req, "text"))
 }
 
-make_request <- function(query_url, header_type) {
+make_request <- function(query_url, header_type, ...) {
 
   accept_headers <-
     c("metadata" = "application/vnd.sdmx.genericdata+xml;version=2.1",
@@ -237,7 +254,7 @@ make_request <- function(query_url, header_type) {
 
   req <- httr::GET(query_url, httr::add_headers(
     "Accept" = accept_headers[header_type],
-    "Accept-Encoding" = "gzip, deflate"))
+    "Accept-Encoding" = "gzip, deflate"), ...)
 
   check_status(req)
   req

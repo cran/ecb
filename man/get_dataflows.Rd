@@ -4,7 +4,10 @@
 \alias{get_dataflows}
 \title{Retrieve data frame of all datasets in the ECB Statistical Data Warehouse}
 \usage{
-get_dataflows()
+get_dataflows(...)
+}
+\arguments{
+\item{...}{Arguments passed to GET (e.g. timeout(10) to add maximum request time)}
 }
 \value{
 A dataframe
@@ -16,4 +19,3 @@ Retrieve data frame of all datasets in the ECB Statistical Data Warehouse
 df <- get_dataflows()
 head(df)
 }
-
