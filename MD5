@@ -1,11 +1,11 @@
-fa5a6af8196e599ba43ab1e8579e96bd *DESCRIPTION
+6dea26aa1532d601929e13f3def3d50b *DESCRIPTION
 441532fd842a144ea0fb06a641071b7f *NAMESPACE
 ab85174c1834988eaebdb6131cc568c2 *R/get_historical_sdw.R
 b2f1b07bd5fc91813f27d0c9d9f4f0cb *R/main.R
-d6fe7d7d406539550d70b66a1658c34c *build/vignette.rds
-69d7f1b0b86cdbdc0d47e123f2fb2a34 *inst/doc/ecb_sdw.R
-5fb19a66a620c5f03b06ffed3d4bd701 *inst/doc/ecb_sdw.Rmd
-759d42ab74954ef8f65429b0f7da7318 *inst/doc/ecb_sdw.html
+fe5dd144afc9a12ec9279308b3de0b5e *build/vignette.rds
+3f8d96cdc4b85e1b651320f5caa0396b *inst/doc/ecb_sdw.R
+2201dc0580541258d7595ad0af30fa09 *inst/doc/ecb_sdw.Rmd
+d0b2c46e2a10edea079aa74cedb9ee42 *inst/doc/ecb_sdw.html
 6bb5adce8b9679294dd7f893a584753b *man/convert_dates.Rd
 05b0c75ac5277ee0be14de78b1d2a659 *man/get_data.Rd
 56a073c4fe2fc2d4e9af2409908ae1c1 *man/get_dataflows.Rd
@@ -13,8 +13,9 @@ c107e7cd51efe666bc5ab58b59d69f38 *man/get_description.Rd
 517da77bc725af2ad0f3b2737c4bf305 *man/get_dimensions.Rd
 843933b855c44c154a26f1cf02754d7f *tests/testthat.R
 44d38df98893d3e3168d1ffb7de45466 *tests/testthat/tests.R
-5fb19a66a620c5f03b06ffed3d4bd701 *vignettes/ecb_sdw.Rmd
+2201dc0580541258d7595ad0af30fa09 *vignettes/ecb_sdw.Rmd
 841fe1e23f412d3d489b6c1b78dcb2bd *vignettes/hicp_plot-1.png
+351d4173edc61c4f55bf2d2da627d63e *vignettes/phillips_plot-1.png
 0a5b283e8584f0f46bc3f79547066871 *vignettes/screenshot.png
 ac7e1b83006d93276043e6f3b2bf3f2c *vignettes/screenshot2.png
 eb6e0e685e9c27b6510bce0455cd5910 *vignettes/vignettes/phillips_plot-1.png

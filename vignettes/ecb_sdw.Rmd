@@ -110,7 +110,7 @@ website:
 To remind oneself of what different values for different dimensions mean, one
 can use the `get_dimensions)` function, which returns a list of dataframes:
 
-```{r get_dimensions_example}
+```{r get_dimensions_example, eval=FALSE}
 dims <- get_dimensions("ICP.M.DE.N.000000+XEF000.4.ANR")
 lapply(dims, head)
 ```
@@ -125,7 +125,7 @@ relationship between these two variables.
 We start by retrieving the two series, using wildcards for the geographic area
 dimension:
 
-```{r retrieve_data}
+```{r retrieve_data, eval=FALSE}
 
 unemp <- get_data("LFSI.M..S.UNEHRT.TOTAL0.15_74.T", 
                  filter = list(startPeriod = "2000"))
@@ -139,14 +139,14 @@ head(wages)
 
 To get a human-readable description of a series:
 
-```{r get_description_example}
+```{r get_description_example, eval=FALSE}
 desc <- head(get_description("LFSI.M..S.UNEHRT.TOTAL0.15_74.T"), 3)
 strwrap(desc, width = 80)
 ```
 
 We now join together the two data sets:
 
-```{r join_data}
+```{r join_data, eval=FALSE}
 suppressPackageStartupMessages(library(dplyr))
 suppressPackageStartupMessages(library(lubridate))
 
@@ -168,7 +168,7 @@ head(df)
 Finally, we plot the annual change in wages against the annual change in
 unemployment for all countries:
 
-```{r phillips_plot, fig.width = 7, fig.height = 6}
+```{r phillips_plot, fig.width = 7, fig.height = 6, eval=FALSE}
 library(ggplot2)
 
 df %>% 
