@@ -1,11 +1,11 @@
-6dea26aa1532d601929e13f3def3d50b *DESCRIPTION
+feb2a625eb33f2da065fac71256bb72f *DESCRIPTION
 441532fd842a144ea0fb06a641071b7f *NAMESPACE
 ab85174c1834988eaebdb6131cc568c2 *R/get_historical_sdw.R
-b2f1b07bd5fc91813f27d0c9d9f4f0cb *R/main.R
+16f67c9bf85dd7b1ec41ffee54621bbf *R/main.R
 fe5dd144afc9a12ec9279308b3de0b5e *build/vignette.rds
 3f8d96cdc4b85e1b651320f5caa0396b *inst/doc/ecb_sdw.R
 2201dc0580541258d7595ad0af30fa09 *inst/doc/ecb_sdw.Rmd
-d0b2c46e2a10edea079aa74cedb9ee42 *inst/doc/ecb_sdw.html
+d12b5020dec007190749ad427869e4e4 *inst/doc/ecb_sdw.html
 6bb5adce8b9679294dd7f893a584753b *man/convert_dates.Rd
 05b0c75ac5277ee0be14de78b1d2a659 *man/get_data.Rd
 56a073c4fe2fc2d4e9af2409908ae1c1 *man/get_dataflows.Rd
