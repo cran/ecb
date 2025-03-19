@@ -6,13 +6,11 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #' df <- get_dataflows()
 #' head(df)
-#' }
 get_dataflows <- function(...) {
 
-  query_url <- "https://sdw-wsrest.ecb.europa.eu/service/dataflow"
+  query_url <- "https://data-api.ecb.europa.eu/service/dataflow"
 
   req <- make_request(query_url, "metadata", ...)
 
@@ -82,11 +80,9 @@ get_dataflows <- function(...) {
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #' # Get monthly data on annualized euro area headline HICP
 #' hicp <- get_data("ICP.M.U2.N.000000.4.ANR")
 #' head(hicp)
-#' }
 get_data <- function(key, filter = NULL, ...) {
 
   if(!"detail" %in% names(filter)) {
@@ -124,10 +120,8 @@ get_data <- function(key, filter = NULL, ...) {
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #' hicp_dims <- get_dimensions("ICP.M.U2.N.000000.4.ANR")
 #' hicp_dims[[1]]
-#' }
 get_dimensions <- function(key, ...) {
 
   query_url <- create_query_url(key, filter = list("detail" = "nodata"))
@@ -175,9 +169,7 @@ get_dimensions <- function(key, ...) {
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #' get_description("ICP.M.DE.N.000000+XEF000.4.ANR")
-#' }
 get_description <- function(key) {
   vapply(get_dimensions(key), function(x) x$value[x$dim == "TITLE_COMPL"],
          character(1))
@@ -191,11 +183,9 @@ get_description <- function(key) {
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #' hicp <- get_data("ICP.M.U2.N.000000.4.ANR")
 #' hicp$obstime <- convert_dates(hicp$obstime)
 #' str(hicp)
-#' }
 convert_dates <- function(x) {
 
   # Annual
@@ -226,7 +216,7 @@ convert_dates <- function(x) {
 
 create_query_url <- function(key, filter = NULL) {
 
-  url <- "https://sdw-wsrest.ecb.europa.eu/service/data"
+  url <- "https://data-api.ecb.europa.eu/service/data"
 
   # Get flow reference (= dataset abbreviation, e.g. ICP or BOP)
   flow_ref <- regmatches(key, regexpr("^[[:alnum:]]+", key))
@@ -247,7 +237,8 @@ create_query_url <- function(key, filter = NULL) {
   query <- paste0(names, "=", values, collapse = "&")
   query <- paste0("?", query)
 
-  query_url <- paste(url, flow_ref, key_q, query, sep = "/")
+  query_url <- paste(url, flow_ref, key_q, sep = "/")
+  query_url <- paste0(query_url, query)
   query_url
 }
 

@@ -1,23 +1,25 @@
 Package: ecb
 Type: Package
-Title: Programmatic Access to the European Central Bank's Statistical
-        Data Warehouse
-Version: 0.4.2
-Date: 2023-04-20
-Authors@R: person("Eric", "Persson", email = "expersso5@gmail.com",
-    role = c("aut", "cre"))
-Description: Provides an interface to the 'European Central Bank's Statistical
-    Data Warehouse' API <https://sdw.ecb.europa.eu/>, allowing for programmatic 
-    retrieval of a vast quantity of statistical data.
+Title: Programmatic Access to the European Central Bank's Data Portal
+Version: 0.4.3
+Date: 2025-03-19
+Authors@R: c(person("Eric", "Persson", email = "expersso5@gmail.com", role = c("aut", "cre")),
+              person(c("Franz", "X."), "Mohr", email = "franz.x.mohr@outlook.com", role = c("ctb"), comment = c(ORCID = "0009-0003-8890-7781")))
+Description: Provides an interface to the European Central Bank's Data
+    Portal API, allowing for programmatic retrieval of a vast quantity
+    of statistical data.
 License: CC0
-URL: https://sdw.ecb.europa.eu/
+URL: https://github.com/expersso/ecb
+BugReports: https://github.com/expersso/ecb/issues
 Suggests: knitr, rmarkdown, dplyr, lubridate, ggplot2, testthat, zoo
 Imports: curl, rsdmx, xml2, httr
 VignetteBuilder: knitr
-RoxygenNote: 7.1.1
+RoxygenNote: 7.3.2
+Encoding: UTF-8
 NeedsCompilation: no
-Packaged: 2023-04-20 08:03:43 UTC; persson
-Author: Eric Persson [aut, cre]
+Packaged: 2025-03-19 09:34:54 UTC; ericpersson
+Author: Eric Persson [aut, cre],
+  Franz X. Mohr [ctb] (<https://orcid.org/0009-0003-8890-7781>)
 Maintainer: Eric Persson <expersso5@gmail.com>
 Repository: CRAN
-Date/Publication: 2023-04-20 16:32:34 UTC
+Date/Publication: 2025-03-19 11:30:02 UTC
