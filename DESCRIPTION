@@ -1,8 +1,8 @@
 Package: ecb
 Type: Package
 Title: Programmatic Access to the European Central Bank's Data Portal
-Version: 0.4.3
-Date: 2025-03-19
+Version: 0.4.4
+Date: 2026-11-05
 Authors@R: c(person("Eric", "Persson", email = "expersso5@gmail.com", role = c("aut", "cre")),
               person(c("Franz", "X."), "Mohr", email = "franz.x.mohr@outlook.com", role = c("ctb"), comment = c(ORCID = "0009-0003-8890-7781")))
 Description: Provides an interface to the European Central Bank's Data
@@ -17,9 +17,9 @@ VignetteBuilder: knitr
 RoxygenNote: 7.3.2
 Encoding: UTF-8
 NeedsCompilation: no
-Packaged: 2025-03-19 09:34:54 UTC; ericpersson
+Packaged: 2026-11-09 12:42:35 UTC; ericpersson
 Author: Eric Persson [aut, cre],
-  Franz X. Mohr [ctb] (<https://orcid.org/0009-0003-8890-7781>)
+  Franz X. Mohr [ctb] (ORCID: <https://orcid.org/0009-0003-8890-7781>)
 Maintainer: Eric Persson <expersso5@gmail.com>
 Repository: CRAN
-Date/Publication: 2025-03-19 11:30:02 UTC
+Date/Publication: 2026-11-09 14:00:02 UTC
